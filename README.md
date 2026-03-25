@@ -120,9 +120,13 @@ npm start
 
 * Profile
 <img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/f5f0d5a7-834f-4ffd-b522-45eeea423086" />
+
 * About
+  
 <img width="1913" height="1079" alt="image" src="https://github.com/user-attachments/assets/dbe2c3b8-cc7b-44cc-b27b-36c94e90973e" />
+
 * Projects
+  
 <img width="1917" height="1079" alt="image" src="https://github.com/user-attachments/assets/5ba06cce-c7da-4b8d-b2b2-98342e65abff" />
 
 ---
