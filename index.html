@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Devraj Choudhary — Data Scientist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─────────────────────────────────── */
+:root {
+  --bg:       #08090c;
+  --bg1:      #0e1018;
+  --border:   rgba(255,255,255,0.07);
+  --text:     #eff1f5;
+  --muted:    #5a6175;
+  --soft:     #8a94a8;
+  --accent:   #4f7cff;
+  --accent2:  #a78bfa;
+  --cyan:     #2dd4bf;
+  --green:    #34d399;
+  --card:     rgba(255,255,255,0.03);
+}
+[data-theme="light"] {
+  --bg:       #fafafa;
+  --bg1:      #f1f3f8;
+  --border:   rgba(0,0,0,0.07);
+  --text:     #111318;
+  --muted:    #8993a8;
+  --soft:     #5a6378;
+  --card:     rgba(0,0,0,0.025);
+}
+
+/* ─── RESET ──────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+::-webkit-scrollbar { width: 2px; }
+::-webkit-scrollbar-thumb { background: var(--accent); }
+
+/* ─── NAV ────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 6vw;
+  backdrop-filter: blur(24px) saturate(1.5);
+  -webkit-backdrop-filter: blur(24px);
+  background: rgba(8,9,12,0.65);
+  border-bottom: 1px solid var(--border);
+  transition: background .3s;
+}
+[data-theme="light"] nav { background: rgba(250,250,250,0.75); }
+
+.logo {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.logo em { font-style: italic; color: var(--accent); }
+
+.nav-right { display: flex; align-items: center; gap: 1.5rem; }
+
+.nav-links { display: flex; gap: 1.75rem; list-style: none; }
+.nav-links a {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--text); }
+
+#theme-toggle {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--soft);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+  flex-shrink: 0;
+}
+#theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+.hamburger {
+  display: none;
+  flex-direction: column; gap: 4px;
+  cursor: pointer; padding: 4px;
+}
+.hamburger span {
+  display: block; width: 20px; height: 1.5px;
+  background: var(--soft); border-radius: 2px;
+  transition: all .25s;
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed; top: 57px; left: 0; right: 0;
+  background: var(--bg1);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem 6vw;
+  z-index: 199;
+  flex-direction: column; gap: 0;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-size: 0.9rem; font-weight: 500;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--soft); padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: color .2s;
+}
+.mobile-menu a:hover { color: var(--text); }
+
+/* ─── LAYOUT ─────────────────────────────────── */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 6vw;
+}
+section { padding: 6rem 0; }
+
+.label {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+  display: block;
+}
+.heading {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: 1rem;
+}
+.heading em { font-style: italic; color: var(--accent); }
+.subtext {
+  font-size: 1rem;
+  color: var(--soft);
+  line-height: 1.75;
+  max-width: 520px;
+  font-weight: 300;
+}
+.rule {
+  width: 28px; height: 1.5px;
+  background: var(--accent);
+  margin-bottom: 1.2rem;
+}
+
+/* ─── HERO ───────────────────────────────────── */
+#hero {
+  min-height: 100svh;
+  display: flex; align-items: center;
+  padding-top: 80px;
+  position: relative; overflow: hidden;
+}
+.hero-glow {
+  position: absolute; border-radius: 50%;
+  filter: blur(80px); pointer-events: none;
+}
+.glow-1 { width: 400px; height: 400px; background: rgba(79,124,255,0.08); top: -100px; right: -100px; }
+.glow-2 { width: 300px; height: 300px; background: rgba(167,139,250,0.06); bottom: 0; left: -50px; }
+
+.hero-inner { max-width: 960px; margin: 0 auto; padding: 0 6vw; width: 100%; }
+
+.hero-status {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: 'Fira Code', monospace; font-size: 0.72rem;
+  color: var(--cyan); margin-bottom: 2rem;
+  opacity: 0; animation: up .5s .1s ease forwards;
+}
+.status-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green); animation: blink 2.5s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+.hero-name {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.5rem;
+  opacity: 0; animation: up .6s .2s ease forwards;
+}
+.hero-name .first { display: block; color: var(--text); }
+.hero-name .last  { display: block; color: var(--muted); font-style: italic; }
+
+.hero-desc {
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: var(--soft); font-weight: 300; line-height: 1.8;
+  max-width: 480px; margin-bottom: 2.5rem;
+  opacity: 0; animation: up .6s .35s ease forwards;
+}
+.hero-tags {
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+  margin-bottom: 3rem;
+  opacity: 0; animation: up .6s .45s ease forwards;
+}
+.tag {
+  font-family: 'Fira Code', monospace; font-size: 0.7rem;
+  padding: 0.3rem 0.75rem; border-radius: 3px;
+  border: 1px solid var(--border); color: var(--muted); background: var(--card);
+  transition: all .2s;
+}
+.tag:hover { border-color: var(--accent); color: var(--accent); }
+
+.hero-actions {
+  display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center;
+  margin-bottom: 3rem;
+  opacity: 0; animation: up .6s .55s ease forwards;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.65rem 1.5rem;
+  font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 500;
+  border-radius: 4px; cursor: pointer; transition: all .2s; border: 1px solid;
+}
+.btn-fill { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-fill:hover { background: #3b6aef; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(79,124,255,.3); }
+.btn-ghost { background: transparent; color: var(--soft); border-color: var(--border); }
+.btn-ghost:hover { border-color: var(--soft); color: var(--text); }
+
+.hero-socials {
+  display: flex; gap: 1.25rem; align-items: center;
+  opacity: 0; animation: up .6s .65s ease forwards;
+}
+.soc { display: flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; color: var(--muted); transition: color .2s; }
+.soc:hover { color: var(--text); }
+.soc svg { width: 14px; height: 14px; }
+
+.hero-stats {
+  display: flex; gap: 2.5rem; flex-wrap: wrap;
+  padding-top: 3rem; margin-top: 3rem;
+  border-top: 1px solid var(--border);
+  opacity: 0; animation: up .6s .75s ease forwards;
+}
+.stat-num {
+  font-family: 'Instrument Serif', serif;
+  font-size: 2rem; font-weight: 400;
+  letter-spacing: -0.03em; color: var(--text); line-height: 1;
+}
+.stat-num span { color: var(--accent); font-style: italic; }
+.stat-lbl { font-size: 0.72rem; color: var(--muted); margin-top: 0.2rem; font-weight: 300; }
+
+@keyframes up { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
+
+/* ─── ABOUT ──────────────────────────────────── */
+#about { background: var(--bg1); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+.about-body p { font-size: 0.95rem; color: var(--soft); line-height: 1.85; margin-bottom: 1.1rem; font-weight: 300; }
+.about-body p strong { color: var(--text); font-weight: 500; }
+
+.edu-block {
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 1.5rem; background: var(--card); margin-bottom: 1rem;
+}
+.edu-school { font-family: 'Instrument Serif', serif; font-size: 1.05rem; margin-bottom: 0.25rem; }
+.edu-deg { font-size: 0.82rem; color: var(--soft); margin-bottom: 0.35rem; }
+.edu-yr { font-family: 'Fira Code', monospace; font-size: 0.68rem; color: var(--accent); margin-bottom: 0.75rem; }
+.pill-row { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.pill {
+  font-size: 0.68rem; padding: 0.15rem 0.55rem;
+  background: rgba(79,124,255,0.08); border: 1px solid rgba(79,124,255,0.15);
+  border-radius: 2px; color: var(--muted); font-family: 'Fira Code', monospace;
+}
+.interest-list { margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
+.int-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  font-size: 0.88rem; color: var(--soft);
+  padding: 0.5rem 0; border-bottom: 1px solid var(--border);
+}
+.int-item:last-child { border-bottom: none; }
+.int-num { font-family: 'Fira Code', monospace; font-size: 0.65rem; color: var(--accent); flex-shrink: 0; width: 20px; }
+
+/* ─── EXPERIENCE ─────────────────────────────── */
+.exp-list { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.exp-item {
+  background: var(--card); padding: 1.75rem;
+  border-bottom: 1px solid var(--border); transition: background .2s;
+}
+.exp-item:last-child { border-bottom: none; }
+.exp-item:hover { background: rgba(79,124,255,0.03); }
+.exp-head { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; }
+.exp-co { font-family: 'Instrument Serif', serif; font-size: 1.15rem; }
+.exp-period {
+  font-family: 'Fira Code', monospace; font-size: 0.68rem; color: var(--accent);
+  padding: 0.25rem 0.6rem; border: 1px solid rgba(79,124,255,0.2);
+  border-radius: 3px; background: rgba(79,124,255,0.06); white-space: nowrap;
+}
+.exp-role { font-size: 0.82rem; color: var(--soft); margin-bottom: 1rem; font-weight: 300; }
+.exp-pts { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+.exp-pts li { font-size: 0.87rem; color: var(--soft); line-height: 1.6; padding-left: 1rem; position: relative; }
+.exp-pts li::before { content: '–'; position: absolute; left: 0; color: var(--accent); font-weight: 300; }
+.chip-row { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 1rem; }
+.chip { font-family: 'Fira Code', monospace; font-size: 0.66rem; padding: 0.18rem 0.55rem; border-radius: 2px; border: 1px solid var(--border); color: var(--muted); background: var(--card); }
+
+/* ─── PROJECTS ───────────────────────────────── */
+.proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 1.5rem; }
+.proj-card {
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+  background: var(--card); transition: border-color .25s, transform .25s;
+  display: flex; flex-direction: column;
+}
+.proj-card:hover { border-color: rgba(79,124,255,.35); transform: translateY(-4px); }
+
+.proj-vis { height: 160px; position: relative; overflow: hidden; background: var(--bg1); }
+.vis-bars {
+  position: absolute; inset: 0;
+  display: flex; align-items: flex-end; gap: 5px;
+  padding: 1.5rem; opacity: 0.6;
+}
+.vb {
+  flex: 1; border-radius: 2px 2px 0 0;
+  background: linear-gradient(to top, var(--accent), rgba(79,124,255,0.5));
+}
+.proj-label-vis { position: absolute; top: 1rem; left: 1rem; font-family: 'Fira Code', monospace; font-size: 0.62rem; color: var(--cyan); letter-spacing: 0.08em; }
+.proj-metric-vis { position: absolute; bottom: 1rem; right: 1rem; font-family: 'Instrument Serif', serif; font-size: 1.5rem; color: var(--text); font-style: italic; }
+
+.proj-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+.proj-cat { font-family: 'Fira Code', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.proj-title { font-family: 'Instrument Serif', serif; font-size: 1.15rem; line-height: 1.3; margin-bottom: 0.75rem; }
+.proj-desc { font-size: 0.85rem; color: var(--soft); line-height: 1.75; font-weight: 300; margin-bottom: 1.25rem; flex: 1; }
+.proj-badges { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1.25rem; }
+.badge { font-size: 0.72rem; padding: 0.25rem 0.65rem; border-radius: 99px; font-weight: 500; }
+.b-blue  { background: rgba(79,124,255,.1);  color: #93b4ff; border: 1px solid rgba(79,124,255,.2); }
+.b-green { background: rgba(52,211,153,.1);  color: #6ee7b7; border: 1px solid rgba(52,211,153,.2); }
+.b-cyan  { background: rgba(45,212,191,.1);  color: #5eead4; border: 1px solid rgba(45,212,191,.2); }
+.b-vio   { background: rgba(167,139,250,.1); color: #c4b5fd; border: 1px solid rgba(167,139,250,.2); }
+
+.proj-foot { display: flex; gap: 0.5rem; padding-top: 1rem; border-top: 1px solid var(--border); flex-wrap: wrap; }
+.proj-link {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  font-size: 0.78rem; font-weight: 500;
+  padding: 0.4rem 0.9rem; border: 1px solid var(--border);
+  border-radius: 3px; color: var(--soft); transition: all .2s;
+}
+.proj-link:hover { border-color: var(--accent); color: var(--accent); }
+.proj-link.prim { background: var(--accent); color: #fff; border-color: var(--accent); }
+.proj-link.prim:hover { background: #3b6aef; }
+
+/* ─── SKILLS ─────────────────────────────────── */
+.skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.skill-box { border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; background: var(--card); }
+.skill-box-title { font-family: 'Fira Code', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+.sk-pills { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.sk-pill {
+  font-size: 0.78rem; padding: 0.3rem 0.7rem; border-radius: 3px;
+  border: 1px solid var(--border); color: var(--text); background: var(--card);
+  cursor: default; transition: all .15s;
+}
+.sk-pill:hover { background: rgba(79,124,255,.08); border-color: rgba(79,124,255,.3); color: var(--accent); }
+
+/* ─── BLOG ───────────────────────────────────── */
+#blog { background: var(--bg1); }
+.blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%,280px),1fr)); gap: 1.25rem; }
+.blog-card {
+  border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem;
+  background: var(--card); color: inherit; transition: all .2s; display: block;
+}
+.blog-card:hover { border-color: rgba(79,124,255,.3); transform: translateY(-2px); }
+.blog-n { font-family: 'Fira Code', monospace; font-size: 0.65rem; color: var(--accent); margin-bottom: 0.75rem; }
+.blog-t { font-family: 'Instrument Serif', serif; font-size: 1rem; line-height: 1.4; margin-bottom: 0.6rem; }
+.blog-x { font-size: 0.8rem; color: var(--muted); line-height: 1.65; font-weight: 300; }
+.blog-arr { font-size: 0.72rem; color: var(--accent); margin-top: 1rem; display: block; }
+
+/* ─── CONTACT ────────────────────────────────── */
+.contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+.contact-links { display: flex; flex-direction: column; gap: 0.75rem; }
+.contact-item {
+  display: flex; align-items: center; gap: 0.9rem;
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 1rem 1.25rem; color: inherit; transition: all .2s;
+}
+.contact-item:hover { border-color: rgba(79,124,255,.3); transform: translateX(3px); }
+.ci-icon {
+  width: 36px; height: 36px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+  background: var(--card); border: 1px solid var(--border);
+}
+.ci-lbl { font-size: 0.68rem; color: var(--muted); margin-bottom: 0.15rem; font-family: 'Fira Code', monospace; }
+.ci-val { font-size: 0.85rem; font-weight: 500; }
+
+.contact-cta {
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 2rem; background: var(--card); position: relative; overflow: hidden;
+}
+.cta-glow {
+  position: absolute; width: 200px; height: 200px; border-radius: 50%;
+  filter: blur(60px); background: rgba(79,124,255,0.08);
+  top: -50px; right: -50px; pointer-events: none;
+}
+.cta-head { font-family: 'Instrument Serif', serif; font-size: 1.6rem; line-height: 1.2; margin-bottom: 0.75rem; }
+.cta-head em { font-style: italic; color: var(--accent); }
+.cta-body { font-size: 0.88rem; color: var(--soft); line-height: 1.75; margin-bottom: 1.75rem; font-weight: 300; }
+.avail {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-family: 'Fira Code', monospace; font-size: 0.7rem; color: var(--green);
+  margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border);
+}
+.avail-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: blink 2.5s infinite; }
+
+/* ─── FOOTER ─────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border); padding: 1.75rem 6vw;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 0.5rem;
+}
+.ft-name { font-family: 'Instrument Serif', serif; font-size: 0.9rem; color: var(--soft); }
+.ft-copy { font-family: 'Fira Code', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.05em; }
+
+/* ─── SCROLL REVEAL ──────────────────────────── */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ─── RESPONSIVE ─────────────────────────────── */
+@media (max-width: 768px) {
+  section { padding: 4rem 0; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .contact-layout { grid-template-columns: 1fr; gap: 2rem; }
+  .hero-stats { gap: 1.5rem; }
+  .stat-num { font-size: 1.6rem; }
+  .proj-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .hero-name { font-size: 3.2rem; }
+  .heading { font-size: 2rem; }
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .btn { justify-content: center; }
+  footer { flex-direction: column; text-align: center; }
+  .hero-stats { gap: 1.2rem; }
+  .stat-num { font-size: 1.4rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Devraj <em>Choudhary</em></div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button id="theme-toggle" onclick="toggleTheme()">☀</button>
+    <div class="hamburger" id="ham" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#experience" onclick="closeMenu()">Experience</a>
+  <a href="#projects" onclick="closeMenu()">Projects</a>
+  <a href="#skills" onclick="closeMenu()">Skills</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow glow-1"></div>
+  <div class="hero-glow glow-2"></div>
+  <div class="hero-inner">
+    <div class="hero-status"><span class="status-dot"></span>available_for_opportunities.exe</div>
+    <h1 class="hero-name">
+      <span class="first">Devraj</span>
+      <span class="last">Choudhary.</span>
+    </h1>
+    <p class="hero-desc">Data Scientist || Data Analyst & Machine Learning || Artificial Intelligence Specialist crafting predictive systems and intelligent data products. Turning raw data into measurable impact.</p>
+    <div class="hero-tags">
+      <span class="tag">machine_learning</span>
+      <span class="tag">predictive_analytics</span>
+      <span class="tag">customer_intelligence</span>
+      <span class="tag">causal_modeling</span>
+      <span class="tag">python</span>
+      <span class="tag">scikit-learn</span>
+    </div>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-fill">View Projects →</a>
+      <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+    </div>
+    <div class="hero-socials">
+      <a href="https://github.com/CodingWithDevraj" target="_blank" class="soc">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/devraj-choudhary-3889412bb/" target="_blank" class="soc">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+        LinkedIn
+      </a>
+      <a href="mailto:devrajror366@gmail.com" class="soc">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Email
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">20<span>+</span></div>
+        <div class="stat-lbl">Repositories on Github</div>
+      </div>
+      
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="reveal">
+      <div class="rule"></div>
+      <span class="label">// about</span>
+      <h2 class="heading">Background &<br><em>Expertise</em></h2>
+    </div>
+    <div class="about-grid reveal">
+      <div class="about-body">
+        <p>I'm an Data Scientist and Machine Learning Specialist with strong expertise in <strong>machine learning algorithms, data preprocessing, statistical modeling,</strong> and predictive analytics.</p>
+        <p>I design analytical pipelines, evaluate model performance, and develop intelligent data-driven applications — from raw ingestion to production dashboards that deliver actionable business intelligence.</p>
+        <p>My approach combines <strong>rigorous statistical thinking</strong> with practical engineering. I care about systems that are not only accurate, but interpretable and useful for real decisions.</p>
+        <div class="interest-list">
+          <div class="int-item"><span class="int-num">01</span>ML Systems & Predictive Intelligence</div>
+          <div class="int-item"><span class="int-num">02</span>Decision Modeling & Causal Inference</div>
+          <div class="int-item"><span class="int-num">03</span>Customer Analytics & Segmentation</div>
+          <div class="int-item"><span class="int-num">04</span>End-to-End ML Pipeline Architecture</div>
+        </div>
+      </div>
+      <div>
+        <div class="edu-block">
+          <div class="edu-school">Gurukul Kangri University</div>
+          <div class="edu-deg">B.Tech — Computer Science & Engineering</div>
+          <div class="edu-yr">2022 — 2026</div>
+          <div class="pill-row">
+            <span class="pill">Machine Learning</span>
+            <span class="pill">Data Science</span>
+            <span class="pill">AI</span>
+            <span class="pill">Statistics</span>
+            <span class="pill">Algorithms</span>
+          </div>
+        </div>
+        <div class="edu-block" style="background: linear-gradient(135deg, rgba(79,124,255,0.04), transparent);">
+          <div style="font-family:'Fira Code',monospace;font-size:0.65rem;color:var(--muted);margin-bottom:0.75rem;letter-spacing:0.1em;">CORE STRENGTHS</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem 1rem;">
+            <div style="font-size:0.82rem;color:var(--soft);padding:0.35rem 0;border-bottom:1px solid var(--border);">Analytical Thinking</div>
+            <div style="font-size:0.82rem;color:var(--soft);padding:0.35rem 0;border-bottom:1px solid var(--border);">Experimentation</div>
+            <div style="font-size:0.82rem;color:var(--soft);padding:0.35rem 0;border-bottom:1px solid var(--border);">Optimization</div>
+            <div style="font-size:0.82rem;color:var(--soft);padding:0.35rem 0;border-bottom:1px solid var(--border);">Problem Solving</div>
+            <div style="font-size:0.82rem;color:var(--soft);padding:0.35rem 0;">Model Evaluation</div>
+            <div style="font-size:0.82rem;color:var(--soft);padding:0.35rem 0;">Data Storytelling</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="reveal">
+      <div class="rule"></div>
+      <span class="label">// experience</span>
+      <h2 class="heading">Work<br><em>History</em></h2>
+      <p class="subtext" style="margin-bottom:2.5rem;">Hands-on internships building real ML systems and data pipelines.</p>
+    </div>
+    <div class="exp-list reveal">
+      <div class="exp-item">
+        <div class="exp-head">
+          <div>
+            <div class="exp-co">CollegeGate</div>
+            <div class="exp-role">Data Science Intern · Dehradun, India</div>
+          </div>
+          <span class="exp-period">Jul – Aug 2025</span>
+        </div>
+        <ul class="exp-pts">
+          <li>Built end-to-end ML pipelines and predictive models for business intelligence</li>
+          <li>Conducted exploratory data analysis and advanced feature engineering on real datasets</li>
+          <li>Improved model performance via hyperparameter tuning and cross-validation</li>
+          <li>Integrated trained models into production-ready workflows and reporting systems</li>
+        </ul>
+        <div class="chip-row">
+          <span class="chip">Python</span><span class="chip">Pandas</span>
+          <span class="chip">NumPy</span><span class="chip">Scikit-learn</span>
+          <span class="chip">EDA</span><span class="chip">Feature Engineering</span>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-head">
+          <div>
+            <div class="exp-co">Crosinfo Software</div>
+            <div class="exp-role">Data Science & ML Intern · Remote</div>
+          </div>
+          <span class="exp-period">Jan – Apr 2025</span>
+        </div>
+        <ul class="exp-pts">
+          <li>Developed supervised ML classification and regression models end-to-end</li>
+          <li>Built robust preprocessing pipelines handling missing values, encoding, and scaling</li>
+          <li>Performed comprehensive EDA and model validation for statistical reliability</li>
+          <li>Generated actionable analytical insights for stakeholder decision-making</li>
+        </ul>
+        <div class="chip-row">
+          <span class="chip">Python</span><span class="chip">Supervised ML</span>
+          <span class="chip">Preprocessing</span><span class="chip">Model Validation</span>
+          <span class="chip">Analytics</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="background: var(--bg1);">
+  <div class="container">
+    <div class="reveal">
+      <div class="rule"></div>
+      <span class="label">// projects</span>
+      <h2 class="heading">Selected<br><em>Work</em></h2>
+      <p class="subtext" style="margin-bottom:2.5rem;">End-to-end ML platforms combining predictive modeling with decision interfaces.</p>
+    </div>
+    <div class="proj-grid reveal">
+      <div class="proj-card">
+  <div class="proj-vis" style="background: linear-gradient(135deg,#180606,#2a0909);">
+    <svg style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 400 160">
+      <defs>
+        <linearGradient id="rev" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#4f7cff"/>
+          <stop offset="100%" stop-color="#34d399"/>
+        </linearGradient>
+      </defs>
+      <path d="M40 120 C 100 90, 160 60, 220 50 S 320 40 360 30"
+            fill="none" stroke="url(#rev)" stroke-width="2"/>
+      <line x1="40" y1="120" x2="360" y2="120" stroke="rgba(255,255,255,0.08)"/>
+      <line x1="40" y1="120" x2="40" y2="20" stroke="rgba(255,255,255,0.08)"/>
+    </svg>
+
+    <div class="proj-label-vis">churn_revenue_model</div>
+    <div class="proj-metric-vis">14.2x Retention ROI</div>
+  </div>
+
+  <div class="proj-body">
+    <div class="proj-cat">Machine Learning · Business Intelligence</div>
+
+    <h3 class="proj-title">Customer Churn Revenue Intelligence</h3>
+
+    <p class="proj-desc">
+      Advanced ML system that predicts customer churn and estimates revenue impact, 
+      enabling businesses to prioritize high-value customers and optimize retention strategies.
+    </p>
+
+    <div class="proj-badges">
+      <span class="badge b-blue">Churn Prediction</span>
+      <span class="badge b-green">Revenue Analytics</span>
+      <span class="badge b-cyan">Business ML</span>
+      <span class="badge b-vio">Decision Intelligence</span>
+    </div>
+
+    <div class="proj-foot">
+      <a href="https://github.com/CodingWithDevraj/customer-churn-revenue-intelligence" target="_blank" class="proj-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302..."/>
+        </svg>
+        GitHub
+      </a>
+
+      <a href="https://customer-churn-revenue-intelligence-w5elzw32zutjz2hdfjfnqu.streamlit.app/" class="proj-link prim">Live Demo ↗</a>
+    </div>
+  </div>
+</div>
+<div class="proj-card">
+  <div class="proj-vis" style="background: linear-gradient(135deg,#061218,#091f2a);">
+    <svg style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 400 160">
+      <defs>
+        <linearGradient id="soil" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#2dd4bf"/>
+          <stop offset="100%" stop-color="#4f7cff"/>
+        </linearGradient>
+      </defs>
+      <circle cx="120" cy="80" r="35" fill="none" stroke="#34d399" stroke-dasharray="4 3"/>
+      <circle cx="260" cy="70" r="45" fill="none" stroke="#2dd4bf" stroke-dasharray="4 3"/>
+      <path d="M40 120 C 100 90, 160 70, 220 60 S 320 50 360 40"
+            fill="none" stroke="url(#soil)" stroke-width="2"/>
+    </svg>
+
+    <div class="proj-label-vis">soil_ai_model</div>
+    <div class="proj-metric-vis">95% Accuracy</div>
+  </div>
+
+  <div class="proj-body">
+    <div class="proj-cat">Machine Learning · Agriculture AI</div>
+
+    <h3 class="proj-title">AI Soil Intelligence System</h3>
+
+    <p class="proj-desc">
+      Intelligent soil analysis system that predicts soil nutrients (NPK) and recommends 
+      optimal fertilizers using machine learning, helping farmers improve crop productivity 
+      and reduce resource wastage.
+    </p>
+
+    <div class="proj-badges">
+      <span class="badge b-green">Soil Analysis</span>
+      <span class="badge b-cyan">NPK Prediction</span>
+      <span class="badge b-blue">Fertilizer Recommendation</span>
+      <span class="badge b-vio">Sustainable Farming</span>
+    </div>
+
+    <div class="proj-foot">
+      <a href="https://github.com/CodingWithDevraj/AI-Soil-Intelligence-System" target="_blank" class="proj-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0c-6.626 0-12 5.373-12 12..."/>
+        </svg>
+        GitHub
+      </a>
+
+      <a href="https://ai-soil-intelligence-system-3tf5bfmu8ejkdaqdqd9r6w.streamlit.app/" class="proj-link prim">Live Demo ↗</a>
+    </div>
+  </div>
+</div>
+
+      <div class="proj-card">
+        <div class="proj-vis" style="background: linear-gradient(135deg,#0b0618,#12092a);">
+          <svg style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 400 160" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <linearGradient id="cg" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#a78bfa"/>
+                <stop offset="100%" stop-color="#2dd4bf"/>
+              </linearGradient>
+            </defs>
+            <line x1="40" y1="130" x2="360" y2="130" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+            <line x1="40" y1="130" x2="40" y2="20" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+            <line x1="40" y1="130" x2="360" y2="40" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-dasharray="4 3"/>
+            <path d="M40 130 C 90 90, 140 45, 190 30 S 280 22 360 38" fill="none" stroke="url(#cg)" stroke-width="2"/>
+            <path d="M40 130 C 90 90, 140 45, 190 30 S 280 22 360 38 L360 40 L40 130Z" fill="rgba(167,139,250,0.07)"/>
+          </svg>
+          <div class="proj-label-vis">uplift_model</div>
+          <div class="proj-metric-vis">3.3x higher conversion</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-cat">Causal ML · Marketing Analytics</div>
+          <h3 class="proj-title">Predictive Uplift Modeling Platform</h3>
+          <p class="proj-desc">Causal ML system for individual-level marketing response prediction across 64,000 customers. Achieved 3.3× higher conversion in the top scored segment.</p>
+          <div class="proj-badges">
+            <span class="badge b-vio">64K Customers</span>
+            <span class="badge b-green">3.3x uplift</span>
+            <span class="badge b-cyan">Causal ML</span>
+            <span class="badge b-blue">Campaign Simulator</span>
+          </div>
+          <div class="proj-foot">
+            <a href="https://github.com/CodingWithDevraj" target="_blank" class="proj-link">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              GitHub
+            </a>
+            <a href="https://churn-uplift-project-ywtsbsygcbjklcrmuqubnm.streamlit.app/" class="proj-link prim">Live Demo ↗</a>
+          </div>
+        </div>
+      </div>
+      <div class="proj-card">
+  <div class="proj-vis" style="background: linear-gradient(135deg,#06180b,#092a12);">
+    <svg style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 400 160">
+      <path d="M40 120 C 100 80, 160 60, 220 50 S 320 40 360 60"
+            fill="none" stroke="#34d399" stroke-width="2"/>
+      <circle cx="120" cy="80" r="30" fill="none" stroke="#2dd4bf" stroke-dasharray="4 3"/>
+      <circle cx="260" cy="60" r="40" fill="none" stroke="#4f7cff" stroke-dasharray="4 3"/>
+    </svg>
+    <div class="proj-label-vis">agriintel_model</div>
+    <div class="proj-metric-vis">92%</div>
+  </div>
+
+  <div class="proj-body">
+    <div class="proj-cat">Machine Learning · Agriculture AI</div>
+    <h3 class="proj-title">AgriIntel Crop Yield Prediction</h3>
+
+    <p class="proj-desc">
+      AI-powered crop yield prediction system that analyzes soil, climate, and environmental factors 
+      to help farmers make data-driven decisions. Built with ML models and deployed using Streamlit.
+    </p>
+
+    <div class="proj-badges">
+      <span class="badge b-green">Agriculture AI</span>
+      <span class="badge b-cyan">Predictive ML</span>
+      <span class="badge b-blue">Streamlit App</span>
+      <span class="badge b-vio">Data Analysis</span>
+    </div>
+
+    <div class="proj-foot">
+      <a href="https://github.com/CodingWithDevraj/AgriIntel-Crop-Yield-Prediction" target="_blank" class="proj-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387..."/>
+        </svg>
+        GitHub
+      </a>
+
+      <a href="https://agriintel-crop-yield-prediction-ccthxnwd3hszspmwpx3wtp.streamlit.app/" class="proj-link prim">Live Demo ↗</a>
+    </div>
+  </div>
+</div>
+<div class="proj-card">
+  <div class="proj-vis" style="background: linear-gradient(135deg,#0a0618,#12092a);">
+    <svg style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 400 160">
+      <defs>
+        <linearGradient id="uber" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#a78bfa"/>
+          <stop offset="100%" stop-color="#4f7cff"/>
+        </linearGradient>
+      </defs>
+      <line x1="40" y1="130" x2="360" y2="130" stroke="rgba(255,255,255,0.08)"/>
+      <line x1="40" y1="130" x2="40" y2="20" stroke="rgba(255,255,255,0.08)"/>
+      <path d="M40 120 C 100 90, 160 70, 220 60 S 320 50 360 40"
+            fill="none" stroke="url(#uber)" stroke-width="2"/>
+    </svg>
+
+    <div class="proj-label-vis">ride_demand_dashboard</div>
+    <div class="proj-metric-vis">24h</div>
+  </div>
+
+  <div class="proj-body">
+    <div class="proj-cat">Data Analytics · Dashboard</div>
+
+    <h3 class="proj-title">Uber Ride Demand Analytics Dashboard</h3>
+
+    <p class="proj-desc">
+      Interactive dashboard analyzing Uber ride demand patterns, peak hours, and customer behavior 
+      using data visualization and analytics techniques to support data-driven decision making.
+    </p>
+
+    <div class="proj-badges">
+      <span class="badge b-blue">Data Visualization</span>
+      <span class="badge b-cyan">EDA</span>
+      <span class="badge b-green">Dashboard</span>
+      <span class="badge b-vio">Business Insights</span>
+    </div>
+
+    <div class="proj-foot">
+      <a href="https://github.com/CodingWithDevraj/Uber-Ride-Demand-Analytics-Dashboard" target="_blank" class="proj-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0c-6.626 0-12 5.373-12 12..."/>
+        </svg>
+        GitHub
+      </a>
+
+      <a href="https://uber-ride-demand-analytics-dashboard-ltj84nqhni8o7dvwdachyg.streamlit.app/" class="proj-link prim">Live Demo ↗</a>
+    </div>
+  </div>
+</div>
+    </div>
+    
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="reveal">
+      <div class="rule"></div>
+      <span class="label">// skills</span>
+      <h2 class="heading">Technical<br><em>Stack</em></h2>
+      <p class="subtext" style="margin-bottom:2.5rem;">Core competencies across the ML development lifecycle.</p>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-box">
+        <div class="skill-box-title">🤖 Machine Learning</div>
+        <div class="sk-pills">
+          <span class="sk-pill">Classification</span>
+          <span class="sk-pill">Regression</span>
+          <span class="sk-pill">Feature Engineering</span>
+          <span class="sk-pill">Model Evaluation</span>
+          <span class="sk-pill">Cross-Validation</span>
+          <span class="sk-pill">Hyperparameter Tuning</span>
+          <span class="sk-pill">Uplift Modeling</span>
+          <span class="sk-pill">Clustering</span>
+        </div>
+      </div>
+      <div class="skill-box">
+        <div class="skill-box-title">📊 Data Science</div>
+        <div class="sk-pills">
+          <span class="sk-pill">EDA</span>
+          <span class="sk-pill">Data Cleaning</span>
+          <span class="sk-pill">Statistical Analysis</span>
+          <span class="sk-pill">Predictive Modeling</span>
+          <span class="sk-pill">Causal Inference</span>
+          <span class="sk-pill">Data Visualization</span>
+          <span class="sk-pill">Pipeline Design</span>
+        </div>
+      </div>
+      <div class="skill-box">
+        <div class="skill-box-title">⚙️ Tools & Tech</div>
+        <div class="sk-pills">
+          <span class="sk-pill">Python</span>
+          <span class="sk-pill">Pandas</span>
+          <span class="sk-pill">NumPy</span>
+          <span class="sk-pill">Scikit-learn</span>
+          <span class="sk-pill">Power BI</span>
+          <span class="sk-pill">Tableau</span>
+          <span class="sk-pill">Streamlit</span>
+          <span class="sk-pill">Matplotlib</span>
+          <span class="sk-pill">SQL</span>
+          <span class="sk-pill">Git</span>
+          <span class="sk-pill">Jupyter</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="container">
+    <div class="reveal">
+      <div class="rule"></div>
+      <span class="label">// insights</span>
+      <h2 class="heading">Thoughts &<br><em>Writings</em></h2>
+      <p class="subtext" style="margin-bottom:2.5rem;">Technical deep-dives on ML concepts and data science practice.</p>
+    </div>
+    <div class="blog-grid reveal">
+      <a href="#" class="blog-card">
+        <div class="blog-n">01 · Article</div>
+        <div class="blog-t">Understanding Uplift Modeling: Beyond Propensity Scores</div>
+        <div class="blog-x">How causal ML separates true treatment effect from selection bias — and why it matters for marketing.</div>
+        <span class="blog-arr">Read more →</span>
+      </a>
+      <a href="#" class="blog-card">
+        <div class="blog-n">02 · Article</div>
+        <div class="blog-t">Feature Engineering for Churn Prediction</div>
+        <div class="blog-x">Building 40+ behavioral features from raw telecom data to significantly boost model signal.</div>
+        <span class="blog-arr">Read more →</span>
+      </a>
+      <a href="#" class="blog-card">
+        <div class="blog-n">03 · Article</div>
+        <div class="blog-t">Customer Segmentation with KMeans at Scale</div>
+        <div class="blog-x">Choosing the right K, handling high-dimensional data, and building interpretable cluster profiles.</div>
+        <span class="blog-arr">Read more →</span>
+      </a>
+      <a href="#" class="blog-card">
+        <div class="blog-n">04 · Article</div>
+        <div class="blog-t">Evaluating ML Models in Practice</div>
+        <div class="blog-x">Beyond accuracy: precision-recall tradeoffs, calibration, and right metrics for business problems.</div>
+        <span class="blog-arr">Read more →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="reveal">
+      <div class="rule"></div>
+      <span class="label">// contact</span>
+      <h2 class="heading">Let's<br><em>Connect</em></h2>
+      <p class="subtext" style="margin-bottom:2.5rem;">Open to internships, research collaborations, and data science roles.</p>
+    </div>
+    <div class="contact-layout reveal">
+      <div class="contact-links">
+        <a href="mailto:devrajror366@gmail.com" class="contact-item">
+          <div class="ci-icon">✉</div>
+          <div><div class="ci-lbl">email</div><div class="ci-val">devrajror366@gmail.com</div></div>
+        </a>
+        <a href="tel:+919528942680" class="contact-item">
+          <div class="ci-icon">☎</div>
+          <div><div class="ci-lbl">phone</div><div class="ci-val">+91 9528942680</div></div>
+        </a>
+        <a href="https://www.linkedin.com/in/devraj-choudhary-3889412bb/" target="_blank" class="contact-item">
+          <div class="ci-icon" style="font-size:0.7rem;font-weight:600;letter-spacing:-0.02em;">in</div>
+          <div><div class="ci-lbl">linkedin</div><div class="ci-val">devraj-choudhary-3889412bb/</div></div>
+        </a>
+        <a href="https://github.com/CodingWithDevraj" target="_blank" class="contact-item">
+          <div class="ci-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          </div>
+          <div><div class="ci-lbl">github</div><div class="ci-val">CodingWithDevraj</div></div>
+        </a>
+      </div>
+      <div class="contact-cta">
+        <div class="cta-glow"></div>
+        <div class="cta-head">Open to<br><em>Opportunities</em></div>
+        <p class="cta-body">Actively seeking data science internships and junior ML roles where I can apply predictive modeling expertise to real-world problems. Let's build something impactful.</p>
+        <a href="mailto:devrajror366@gmail.com" class="btn btn-fill" style="display:inline-flex;">Send a Message →</a>
+        <div class="avail">
+          <span class="avail-dot"></span>
+          Available for new opportunities
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-name">Devraj <em style="font-style:italic;color:var(--accent)">Choudhary</em></div>
+  <div class="ft-copy">Data Scientist & ML Engineer · 2025</div>
+</footer>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.dataset.theme === 'dark';
+  html.dataset.theme = isDark ? 'light' : 'dark';
+  document.getElementById('theme-toggle').textContent = isDark ? '☾' : '☀';
+}
+
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+document.addEventListener('click', e => {
+  const menu = document.getElementById('mobileMenu');
+  const ham = document.getElementById('ham');
+  if (menu.classList.contains('open') && !menu.contains(e.target) && !ham.contains(e.target)) closeMenu();
+});
+
+const obs = new IntersectionObserver(
+  entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }),
+  { threshold: 0.08 }
+);
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
