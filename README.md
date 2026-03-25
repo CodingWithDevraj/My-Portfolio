@@ -129,6 +129,11 @@ npm start
   
 <img width="1917" height="1079" alt="image" src="https://github.com/user-attachments/assets/5ba06cce-c7da-4b8d-b2b2-98342e65abff" />
 
+* Contact
+
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/4d789217-9b04-48b3-8930-e904bcb0f83d" />
+
+
 ---
 
 ## Future Improvements
