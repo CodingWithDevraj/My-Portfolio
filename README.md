@@ -88,7 +88,7 @@ portfolio/
 
 ```
 
-git clone [https://github.com/your-username/your-portfolio-repo.git](https://github.com/your-username/your-portfolio-repo.git)
+git clone https://github.com/CodingWithDevraj/My-Portfolio
 
 ```
 
